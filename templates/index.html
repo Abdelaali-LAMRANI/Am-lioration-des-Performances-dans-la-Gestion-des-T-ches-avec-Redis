@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Projet de Gestion de Tâches</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Formulaire de Gestion de Tâches</h1>
+    </header>
+
+    <form id="task-form" method="POST" action={{ url_for('create_task') }}>
+        <table>
+            <tr>
+                <td><label for="task-name">Nom de la Tâche</label></td>
+                <td><input type="text" id="task-name" name="task-name" required></td>
+            </tr>
+            <tr>
+                <td><label for="task-description">Description</label></td>
+                <td><textarea id="task-description" name="task-description" class="task-description" rows="3" required></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="task-due-date">Date de la tache</label></td>
+                <td><input type="date" id="task-due-date" name="task-due-date" required></td>
+            </tr>
+            <tr>
+                <td><label for="task-priority">Priorité</label></td>
+                <td><select id="task-priority" name="task-priority" required>
+                    <option value="faible">Faible</option>
+                    <option value="moyenne">Moyenne</option>
+                    <option value="élevée">Élevée</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Créer</button></td>
+            </tr>
+        </table>
+    </form>
+    <!-- Bouton pour afficher la liste des tâches -->
+    <div class="center-button-container">
+        <a href="{{ url_for('tasks') }}"><button class="center-button">Afficher la Liste des Tâches</button></a>
+    </div>
+</body>
+</html>

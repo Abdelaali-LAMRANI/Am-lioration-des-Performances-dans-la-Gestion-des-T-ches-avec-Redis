@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+header{
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #45a07d; 
+}
+form {
+    max-width: 400px;
+    margin: auto;
+
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    width: 300px;
+}
+#task_description, #task_description, #task_name ,#task_due_date{
+    width: 300px;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: None;
+    width: 200px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}

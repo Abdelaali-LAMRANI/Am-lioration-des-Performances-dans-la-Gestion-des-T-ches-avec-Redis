@@ -1,0 +1,89 @@
+<!-- tasks.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Tâches</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='tasks.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <script src="{{ url_for('static', filename='tasks.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Liste des Tâches</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Date d'échéance</th>
+                <th>Priorité</th>
+                <th>Statut</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.task_name }}</td>
+                    <td>{{ task.task_description }}</td>
+                    <td>{{ task.task_due_date }}</td>
+                    <td>{{ task.task_priority }}</td>
+                    <td>
+                        {% if task.task_status == 'not_done' %}
+                            <a href="#" class="status-toggle" data-task-id="{{ task.id }}" data-url="{{ url_for('update_status', task_id=task.id) }}">
+                            <i class="far fa-hourglass"></i>
+                             </a>
+                        {% elif task.task_status == 'done' %}
+                            <a href="#" class="status-toggle" data-task-id="{{ task.id }}" data-url="{{ url_for('update_status', task_id=task.id) }}">
+                            <i class="fas fa-check"></i>
+                            </a>
+                        {% endif %}
+                        </td>
+                    
+                            <td><form method="POST" action="{{ url_for('update_task', task_id=task.id) }}"> 
+                                <button type="submit">Modifier</button>
+                            </form>
+                            </td>
+                             <td> <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}">
+                                <button type="submit">Supprimer</button>
+                            </form></td>
+                        </tr> 
+                    {% endfor %}
+                    </tbody>
+                </table>
+    <div id="add-task-button">
+    <h1>Ajouter une nouvelle tâche</h1>
+    <a href="{{ url_for('add_task') }}" class="add-task-button">
+        <button>Ajouter une Tâche</button>
+    </a>
+    </div>
+   
+    
+    <script>
+        $('.status-toggle').on('click', function() {
+            var self = $(this);
+            var taskId = self.data('task-id');
+            var url = self.data('url');
+        
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {task_id: taskId},
+                success: function(response) {
+                    if (response.message === 'Statut mis à jour avec succès') {
+                        var icon = self.find('i');
+                        icon.toggleClass('fa-check fa-hourglass');
+                        location.reload();
+                    }
+                }
+            });
+        });
+        
+        
+        
+        
+    </script>
+</body>
+</html>
